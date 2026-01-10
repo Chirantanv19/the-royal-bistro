@@ -1,73 +1,73 @@
-import { prisma } from "@/lib/prisma";
+"use client";
+
 import { QRCodeSVG } from "qrcode.react";
 import { Button } from "@/components/ui/button";
 import { Printer } from "lucide-react";
 
-// ✅ HARDCODED LIVE LINK (No environment variables needed)
-const APP_URL = "https://the-royal-bistro.vercel.app";
+export default function QrCodePage() {
+  // Hardcoded list of tables
+  const tables = [1, 2, 3, 4, 5, 6, 7, 8];
 
-export default async function QRCodesPage() {
-  const tables = await prisma.table.findMany({
-    orderBy: { number: "asc" },
-  });
+  // ⚠️ IMPORTANT: Localhost will NOT work on a phone. 
+  // You must replace this with your Computer's Local IP (e.g., 192.168.1.5) 
+  // or your deployed Vercel domain.
+  const baseUrl = "https://the-royal-bistro.vercel/menu/table";
+
+  const handlePrint = () => {
+    window.print();
+  };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold font-serif text-wood-900">QR Codes</h1>
+    <div className="space-y-6 bg-stone-50 min-h-screen p-8">
+      {/* Header Section */}
+      <div className="flex justify-between items-center print:hidden">
+        <div>
+          <h1 className="text-3xl font-serif text-stone-900 font-bold">QR Codes</h1>
+          <p className="text-stone-600">Print these for your tables.</p>
+        </div>
         <Button
-          variant="outline"
-          className="border-wood-600 text-wood-900 hover:bg-wood-100 gap-2"
-          // Simple print trigger
-          onClick={() => {
-            'use client';
-            window.print(); // Note: This might need a client component wrapper in strict mode, but often works in simple server pages
-          }}
+          onClick={handlePrint}
+          className="bg-stone-800 hover:bg-stone-900 text-white gap-2"
         >
-          <Printer className="w-4 h-4" /> Print All
+          <Printer className="h-4 w-4" /> Print All
         </Button>
       </div>
 
-      <p className="text-wood-600">
-        Scan these codes to open the menu for a specific table.
-        <br />
-        <span className="text-xs font-mono bg-green-100 text-green-800 p-1 rounded">
-          Active Link: {APP_URL}
-        </span>
-      </p>
+      {/* Grid Container */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-8 p-6 bg-white rounded-lg border border-stone-200 print:block print:p-0 print:border-none">
+        {tables.map((tableId) => (
+          <div
+            key={tableId}
+            className="flex flex-col items-center space-y-4 p-6 border-2 border-dashed border-stone-300 rounded-lg bg-stone-50 
+            print:break-inside-avoid print:border-black print:mb-8 print:w-[45%] print:inline-block print:mx-[2%]"
+          >
+            <h3 className="text-2xl font-bold font-serif text-stone-900">Table {tableId}</h3>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 print:grid-cols-3">
-        {tables.map((table) => {
-          // Generates: https://the-royal-bistro.vercel.app/menu/table/xyz
-          const url = `${APP_URL}/menu/table/${table.id}`;
-
-          return (
-            <div
-              key={table.id}
-              className="flex flex-col items-center p-6 bg-white border-2 border-wood-200 rounded-lg shadow-sm print:border-black print:shadow-none break-inside-avoid"
-            >
-              <div className="mb-2 text-center">
-                <h2 className="text-xl font-bold font-serif text-wood-900">The Royal Bistro</h2>
-                <p className="text-sm font-sans uppercase tracking-widest text-gold-600">Table {table.number}</p>
-              </div>
-
-              {/* The QR Code */}
-              <div className="p-2 bg-white rounded border border-gray-100">
-                <QRCodeSVG
-                  value={url}
-                  size={150}
-                  level="H"
-                  fgColor="#2c2116"
-                />
-              </div>
-
-              <div className="mt-4 text-center space-y-1">
-                <p className="text-xs text-gray-400 font-mono">Scan to Order</p>
-              </div>
+            <div className="bg-white p-2 rounded shadow-sm border border-stone-200">
+              <QRCodeSVG
+                value={`${baseUrl}/${tableId}`}
+                size={150}
+                level="H"
+                fgColor="#1c1917" // Dark stone color
+              />
             </div>
-          );
-        })}
+
+            <p className="text-sm text-stone-500 font-mono uppercase tracking-wider">
+              Scan to Order
+            </p>
+          </div>
+        ))}
       </div>
+
+      {/* Standard CSS Style Tag for Print Layout */}
+      <style>{`
+        @media print {
+          @page { margin: 20px; size: auto; }
+          body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+          /* Hide standard layout elements if they exist in your app */
+          nav, aside, header, footer { display: none !important; }
+        }
+      `}</style>
     </div>
   );
 }
