@@ -11,7 +11,7 @@ export default function QrCodePage() {
   // ⚠️ IMPORTANT: Localhost will NOT work on a phone. 
   // You must replace this with your Computer's Local IP (e.g., 192.168.1.5) 
   // or your deployed Vercel domain.
-  const baseUrl = "https://the-royal-bistro.vercel/menu/table";
+  const baseUrl = "https://the-royal-bistro.vercel.app/menu/table";
 
   const handlePrint = () => {
     window.print();
