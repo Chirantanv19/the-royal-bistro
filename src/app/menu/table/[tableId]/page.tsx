@@ -1,21 +1,18 @@
 import { prisma } from "@/lib/prisma";
-import MenuInterface from "@/components/menu/MenuInterface";
+import MenuInterface from "@/components/menu/MenuInterface"; // Import the Royal Interface
 
-export default async function PublicMenuPage({
+export default async function MenuPage({
     params,
 }: {
-    params: Promise<{ tableId: string }>; // <--- MUST be a Promise
+    params: Promise<{ id: string }>;
 }) {
-    const tableId = (await params).tableId; // <--- MUST await it
+    const tableId = (await params).id;
 
-    const items = await prisma.menuItem.findMany({
-        where: { available: true },
+    // Fetch all menu items
+    const menuItems = await prisma.menuItem.findMany({
         orderBy: { category: "asc" },
     });
 
-    return (
-        <div className="min-h-screen bg-wood-50">
-            <MenuInterface items={items} tableId={tableId} />
-        </div>
-    );
+    // Pass data to the Client Component
+    return <MenuInterface initialItems={menuItems} tableId={tableId} />;
 }
