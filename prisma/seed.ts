@@ -40,14 +40,14 @@ async function main() {
             image: "https://images.unsplash.com/photo-1510707577719-ae7c14805e3a?auto=format&fit=crop&w=800&q=80",
             dietary: ["VEGAN", "GF"],
         },
-        {
-            name: "Caramel Macchiato",
-            description: "Freshly steamed milk with vanilla-flavored syrup marked with espresso.",
-            price: 5.50,
-            category: "COFFEE",
-            image: "https://images.unsplash.com/photo-1485808191679-5f8c7c8606af?auto=format&fit=crop&w=800&q=80",
-            dietary: ["GF"],
-        },
+        // {
+        //     name: "Caramel Macchiato",
+        //     description: "Freshly steamed milk with vanilla-flavored syrup marked with espresso.",
+        //     price: 5.50,
+        //     category: "COFFEE",
+        //     image: "https://images.unsplash.com/photo-1485808191679-5f8c7c8606af?auto=format&fit=crop&w=800&q=80",
+        //     dietary: ["GF"],
+        // },
         {
             name: "Artisan Croissant",
             description: "Buttery, flaky, and golden brown. Baked fresh every morning.",
