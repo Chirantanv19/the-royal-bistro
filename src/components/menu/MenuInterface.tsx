@@ -48,7 +48,8 @@ export default function MenuInterface({
                 body: JSON.stringify({ tableId, items: cart }),
             });
             if (!res.ok) throw new Error();
-            toast.success("Order Sent to Kitchen!");
+            toast.success("Order Sent to Kitchen!" + tableId);
+
             setCart([]);
             setIsCartOpen(false);
         } catch {
