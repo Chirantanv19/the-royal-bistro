@@ -22,12 +22,16 @@ export default function AdminLayout({
       {/* Sidebar */}
       <aside className="w-64 bg-wood-900 text-cream-100 flex flex-col border-r border-wood-700">
         <div className="p-6 border-b border-wood-700">
-          <div className="flex items-center gap-2 text-gold-500 mb-1">
-            <Store className="h-6 w-6" />
-            <span className="font-serif font-bold tracking-wider">ROYAL ADMIN</span>
-          </div>
-          <p className="text-xs text-wood-300">Manager Dashboard</p>
+
+          <Link href="/">
+            <div className="flex items-center gap-2 text-gold-500 mb-1">
+              <Store className="h-6 w-6" />
+              <span className="font-serif font-bold tracking-wider">ROYAL ADMIN</span>
+            </div>
+            <p className="text-xs text-wood-300">Manager Dashboard</p>
+          </Link>
         </div>
+
 
         <nav className="flex-1 p-4 space-y-2">
           <Link href="/dashboard">
