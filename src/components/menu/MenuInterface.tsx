@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { ShoppingBag, Plus, Minus, X } from "lucide-react";
+// import { tableId } from 
 
 type CartItem = MenuItem & { quantity: number };
 
@@ -43,7 +44,7 @@ export default function MenuInterface({
 
     const submitOrder = async () => {
         try {
-            const res = await fetch("/api/order", {
+            const res = await fetch("/api/orders", {
                 method: "POST",
                 body: JSON.stringify({ tableId, items: cart }),
             });
@@ -92,8 +93,8 @@ export default function MenuInterface({
                             key={cat}
                             onClick={() => setActiveCategory(cat)}
                             className={`whitespace-nowrap px-6 py-2 text-sm font-bold tracking-widest uppercase transition-all border ${activeCategory === cat
-                                    ? "bg-[#b88a4d] text-[#1a1410] border-[#b88a4d]"
-                                    : "bg-transparent text-[#b88a4d] border-[#b88a4d]/30"
+                                ? "bg-[#b88a4d] text-[#1a1410] border-[#b88a4d]"
+                                : "bg-transparent text-[#b88a4d] border-[#b88a4d]/30"
                                 }`}
                         >
                             {cat}
