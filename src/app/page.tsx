@@ -32,6 +32,7 @@ export default function LandingPage() {
 
           {/* Center Logo - BIG & CLEAN */}
           <div className="absolute left-1/2 -translate-x-1/2 top-4">
+          <Link href="/">
             <div className="relative w-50 h-35 md:w-70 md:h-50 drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)] hover:scale-105 transition-transform duration-500">
               <Image
                 src="/royal-logo.png"
@@ -41,6 +42,7 @@ export default function LandingPage() {
                 priority
               />
             </div>
+            </Link>
           </div>
 
           {/* Right Links */}
