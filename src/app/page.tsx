@@ -32,7 +32,7 @@ export default function LandingPage() {
 
           {/* Center Logo - BIG & CLEAN */}
           <div className="absolute left-1/2 -translate-x-1/2 top-4">
-            <div className="relative w-40 h-28 md:w-60 md:h-44 drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)] hover:scale-105 transition-transform duration-500">
+            <div className="relative w-50 h-35 md:w-70 md:h-50 drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)] hover:scale-105 transition-transform duration-500">
               <Image
                 src="/royal-logo.png"
                 alt="The Royal Bistro"
@@ -49,7 +49,7 @@ export default function LandingPage() {
               Location
             </Link>
             <Link href="/reservations">
-              <Button className="bg-[#b88a4d] hover:bg-[#d4af7a] text-[#2a1d14] font-bold px-8 py-2 rounded-none border border-[#faeacc]/20 shadow-[0_0_15px_rgba(184,138,77,0.4)]">
+              <Button className="hidden md:block bg-[#b88a4d] hover:bg-[#d4af7a] text-[#2a1d14] font-bold px-8 py-2 rounded-none border border-[#faeacc]/20 shadow-[0_0_15px_rgba(184,138,77,0.4)]">
                 BOOK TABLE
               </Button>
             </Link>
@@ -94,6 +94,7 @@ export default function LandingPage() {
               </Button>
             </Link>
           </div>
+
         </div>
       </section>
 
