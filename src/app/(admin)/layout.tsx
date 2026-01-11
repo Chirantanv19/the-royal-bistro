@@ -48,7 +48,7 @@ export default function AdminLayout({
               Reservations
             </Button>
           </Link>
-          <Link href="/dashboard/qr-codes">
+          <Link href="/dashboard/qr">
             <Button variant="ghost" className="w-full justify-start gap-3 hover:bg-wood-800 hover:text-gold-500 text-cream-100">
               <QrCode className="h-4 w-4" />
               QR Ordering
