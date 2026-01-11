@@ -43,7 +43,7 @@ export default function MenuInterface({
 
     const submitOrder = async () => {
         try {
-            const res = await fetch("/api/orders", {
+            const res = await fetch("/api/order", {
                 method: "POST",
                 body: JSON.stringify({ tableId, items: cart }),
             });
