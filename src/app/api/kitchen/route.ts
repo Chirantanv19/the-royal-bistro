@@ -2,29 +2,31 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { OrderStatus } from "@prisma/client";
 
+// ✅ CRITICAL: Force the API to not cache data
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   try {
-    // Fetch all orders that are NOT completed or cancelled
     const orders = await prisma.order.findMany({
       where: {
         status: {
-          notIn: [OrderStatus.COMPLETED, OrderStatus.CANCELLED]
+          not: OrderStatus.COMPLETED
         }
       },
       include: {
         items: {
           include: {
-            menuItem: true // Get the name of the food
+            menuItem: true
           }
         }
       },
       orderBy: {
-        createdAt: 'asc' // Oldest orders first
+        createdAt: 'asc'
       }
     });
 
     return NextResponse.json(orders);
-  } catch (error) {
-    return NextResponse.json({ error: "Failed to fetch orders" }, { status: 500 });
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

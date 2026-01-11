@@ -7,25 +7,22 @@ export async function POST(request: Request) {
         const body = await request.json();
         const { tableId, items } = body;
 
-        // Validation: Ensure items exist
+        // Validation
         if (!items || items.length === 0) {
             return NextResponse.json({ error: "Cart is empty" }, { status: 400 });
         }
 
-        console.log("📝 Processing Order for Table:", tableId);
+        console.log(`📝 New Order for Table: ${tableId}`);
 
-        // Calculate Total
+        // Calculate Total safely
         const total = items.reduce((sum: number, item: any) => {
             return sum + (item.price * item.quantity);
         }, 0);
 
-        // Create Order
+        // Create Order in DB
         const order = await prisma.order.create({
             data: {
-                // ⚠️ DOUBLE CHECK: Is tableId an Int or String in schema.prisma?
-                // If Int, use Number(tableId). If String, use String(tableId).
-                tableId: String(tableId),
-
+                tableId: String(tableId), // Forces string format
                 total: total,
                 status: OrderStatus.PENDING,
                 items: {
@@ -38,20 +35,10 @@ export async function POST(request: Request) {
             }
         });
 
-        console.log("✅ Order Saved:", order.id);
         return NextResponse.json({ success: true, orderId: order.id });
 
     } catch (error: any) {
         console.error("❌ ORDER FAILED:", error);
-
-        // Prisma specific error handling
-        if (error.code === 'P2003') {
-            return NextResponse.json(
-                { success: false, error: "Invalid Menu Item ID or Table ID (Foreign Key Failed)" },
-                { status: 400 }
-            );
-        }
-
         return NextResponse.json(
             { success: false, error: error.message },
             { status: 500 }

@@ -1,35 +1,37 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { OrderStatus } from "@prisma/client"; // ✅ Vital Import
+import { OrderStatus } from "@prisma/client";
 
-// ✅ This line forces the API to run fresh every time (no caching)
-export const dynamic = "force-dynamic";
-
-export async function GET() {
+export async function PATCH(
+    request: Request,
+    // 1. Update the type definition
+    { params }: { params: Promise<{ id: string }> }
+) {
     try {
-        // Fetch all orders that are NOT completed or cancelled
-        const orders = await prisma.order.findMany({
-            where: {
-                status: {
-                    notIn: [OrderStatus.COMPLETED, OrderStatus.CANCELLED]
-                }
+        // 2. AWAIT THE PARAMS (This is the fix)
+        const { id } = await params;
+
+        const body = await request.json();
+        const { status } = body;
+
+        console.log(`👨‍🍳 Updating Order ID: ${id} to Status: ${status}`);
+
+        // 3. Update in Database
+        const updatedOrder = await prisma.order.update({
+            where: { id: id },
+            data: {
+                // Ensure we cast the string to the Enum type
+                status: status as OrderStatus
             },
-            include: {
-                items: {
-                    include: {
-                        menuItem: true // Get the name of the food
-                    }
-                }
-            },
-            orderBy: {
-                createdAt: 'asc' // Oldest orders first (FIFO)
-            }
         });
 
-        return NextResponse.json(orders);
+        return NextResponse.json(updatedOrder);
+
     } catch (error: any) {
-        console.error("❌ KITCHEN API ERROR:", error);
-        // Return a JSON error so the frontend check (Array.isArray) catches it safely
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        console.error("❌ Update Failed:", error);
+        return NextResponse.json(
+            { error: "Failed to update order" },
+            { status: 500 }
+        );
     }
 }

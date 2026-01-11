@@ -1,18 +1,27 @@
 import { prisma } from "@/lib/prisma";
-import MenuInterface from "@/components/menu/MenuInterface"; // Import the Royal Interface
+import MenuInterface from "@/components/menu/MenuInterface";
 
-export default async function MenuPage({
-    params,
-}: {
-    params: Promise<{ id: string }>;
-}) {
-    const tableId = (await params).id;
+// 1. Update the Props Type to be a Promise
+interface PageProps {
+    params: Promise<{
+        tableId: string;
+    }>;
+}
 
-    // Fetch all menu items
-    const menuItems = await prisma.menuItem.findMany({
-        orderBy: { category: "asc" },
+export default async function MenuPage({ params }: PageProps) {
+    // 2. AWAIT the params here (Crucial Next.js 15 Fix)
+    const { tableId } = await params;
+
+    console.log("🟢 Loading Menu for Table:", tableId);
+
+    const items = await prisma.menuItem.findMany({
+        orderBy: { category: 'asc' }
     });
 
-    // Pass data to the Client Component
-    return <MenuInterface initialItems={menuItems} tableId={tableId} />;
+    return (
+        <MenuInterface
+            initialItems={items}
+            tableId={tableId}
+        />
+    );
 }
