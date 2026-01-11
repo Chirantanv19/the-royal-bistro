@@ -93,6 +93,11 @@ export default function LandingPage() {
                 View Menu
               </Button>
             </Link>
+            <Link href="/reservations">
+              <Button className="h-14 px-12 text-lg bg-transparent border-2 border-[#b88a4d] text-[#b88a4d] hover:bg-[#b88a4d] hover:text-[#2a1d14] transition-all duration-300 font-bold tracking-widest uppercase rounded-none backdrop-blur-sm">
+                Book Table
+              </Button>
+            </Link>
           </div>
 
         </div>
