@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { ShoppingBag, Plus, Minus, X } from "lucide-react";
-// import { tableId } from 
+
 
 type CartItem = MenuItem & { quantity: number };
 
